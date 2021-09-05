@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  backend:
+    build:
+      context: ./backend
+    networks:
+      - django-nginx
+    volumes:
+      - .:/code
+      - django-static:/backend/static
+      - django-media:/backend/media
+    depends_on:
+      - crm_db
+    env_file:
+      - ./backend/.prod.env
+
+  crm_db:
+    image: postgres
+    networks:
+      - django-nginx
+    env_file:
+      - ./envs/.postgres.env
+
+  nginx:
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
+    ports:
+      - 80:80
+    networks:
+      - django-nginx
+    volumes:
+      - ./nginx/nginx-conf.conf:/etc/nginx/nginx.conf:ro
+      - django-static:/usr/src/app/static
+      - django-media:/usr/src/app/media
+    depends_on:
+      - backend
+
+
+volumes:
+  django-static:
+  django-media:
+
+networks:
+  django-nginx:
+    driver: bridge

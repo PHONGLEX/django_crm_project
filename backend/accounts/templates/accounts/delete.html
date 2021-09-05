@@ -1,0 +1,12 @@
+{% extends "accounts/base.html" %}
+
+{% block content %}
+	<p>Are you sure you want to delete "{{item}}" ?</p>
+
+	<form action="{% url 'accounts:delete-order' item.pk %}" method="POST">
+		{% csrf_token %}
+		<a class="btn btn-warning" href="{% url 'accounts:dashboard' %}">Cancel</a>
+		<input class="btn btn-danger" type="submit" value="Submit">
+	</form>
+	
+{% endblock content %}

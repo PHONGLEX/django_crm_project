@@ -1,0 +1,80 @@
+{% extends "accounts/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+	<div class="row">
+	<div class="col-md">
+		<div class="card card-body">
+			<h5>Customer:</h5>
+			<hr>
+			<div class="btn-group">
+				<a class="btn btn-outline-success btn-sm btn-block" href="">Update Customer</a>
+				<a class="btn btn-outline-danger btn-sm btn-block" href="{% url 'accounts:create-order' customer.pk %}">Place Order</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md">
+		<div class="card card-body">
+			<h5>Contact Information</h5>
+			<hr>
+			<p>Email: {{customer.email}}</p>
+			<p>Phone: {{customer.phone}}</p>
+		</div>
+	</div>
+
+	<div class="col-md">
+		<div class="card card-body">
+			<h5>Total Orders</h5>
+			<hr>
+			<h1 style="text-align: center;padding: 10px">{{orders.count}}</h1>
+		</div>
+	</div>
+</div>
+
+
+<br>
+<div class="row">
+	<div class="col">
+		<div class="card card-body">
+			<form method="get">
+				{{myFilter.form|crispy}}
+			    <button class="btn btn-primary mt-3" type="submit">Search</button>
+			 </form>
+		</div>
+	</div>
+	
+</div>
+<br>
+
+<div class="row">
+	<div class="col-md">
+		<div class="card card-body">
+			<table class="table table-sm">
+				<tr>
+					<th>Product</th>
+					<th>Note</th>
+					<th>Date Orderd</th>	
+					<th>Status</th>
+					<th></th>
+				</tr>
+				{% for order in orders %}
+					<tr>
+						<td>{{order.product.name}}</td>
+						<td>{{order.note}}</td>
+						<td>{{order.date_created}}</td>
+						<td>{{order.status}}</td>
+						<td>
+							<a class="btn" href="">
+								<i class="fas fa-edit"></i>
+							</a>
+							<a class="btn" href="">
+								<i class="fas fa-trash"></i>
+							</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</table>
+		</div>
+	</div>
+</div>
+{% endblock content %}

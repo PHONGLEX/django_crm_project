@@ -1,0 +1,38 @@
+{% extends "accounts/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+
+	<div class="row">
+		<div class="col-md-6 offset-3">
+			<form method="post" action="">
+				{% csrf_token %}
+			    <h1 class="h3 mb-3 fw-normal text-center">Login</h1>
+				<div class="form-floating">
+			      <!--<input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">-->
+			      {{form.username}}
+			      <label for="floatingInput">Username</label>
+			    </div>
+			    <div class="form-floating">
+			      <!--<input type="password" class="form-control" id="floatingPassword" placeholder="Password">-->
+			      {{form.password}}
+			      <label for="floatingPassword">Password</label>
+			    </div>
+			    <button class="w-100 btn btn-lg btn-primary mt-3" type="submit">Login</button>
+			    
+			</form>
+
+			<div class="mt-4">
+				<div class="d-flex justify-content-center links">
+					<p>Don't have an account? <a href="{% url 'accounts:register' %}"> Sign Up</a></p>
+					
+				</div>
+				<div class="d-flex justify-content-center links">
+					<p>Forgot password? <a href="{% url 'reset_password' %}"> Reset password</a></p>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+{% endblock content %}
